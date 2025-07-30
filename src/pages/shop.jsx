@@ -2,6 +2,7 @@ import Navigation from "../components/Navigation.jsx";
 import { useState, useEffect } from 'react'
 import Card from "../components/Card.jsx";
 import DrawerCart from "../components/DrawerCart.jsx";
+import {getProductsFromApi} from "../api/fakeStore.js";
 
 export default function Shop(){
   const [products, setProducts] = useState([])
@@ -9,8 +10,7 @@ export default function Shop(){
   const [cartItems, setCartItems] = useState([])
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-        .then((res) => res.json())
+    getProductsFromApi()
         .then((data) =>
         {
           setLoading(false);
@@ -29,7 +29,7 @@ export default function Shop(){
     setCartItems(cartItems.filter(item => item.id !== id));
   };
 
-  if (loading) return <span className="loading loading-dots loading-xl"></span>;
+  if (loading) return <span aria-label="Loading products" className="loading loading-dots loading-xl"></span>;
   return (
       <div className="drawer drawer-end">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
